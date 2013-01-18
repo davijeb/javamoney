@@ -24,6 +24,7 @@ import java.util.Arrays;
 import java.util.Enumeration;
 
 import javax.money.CurrencyUnit;
+import javax.money.convert.CurrencyConversionException;
 import javax.money.convert.ExchangeRate;
 import javax.money.convert.ExchangeRateType;
 
@@ -80,6 +81,10 @@ public class ExchangeRateImpl implements ExchangeRate {
 	@SuppressWarnings("unchecked")
 	public ExchangeRateImpl(CurrencyUnit source, CurrencyUnit target,
 			BigDecimal factor) {
+
+        if(factor.intValue() < 0)
+            throw new CurrencyConversionException(source,target, "Exchange rate must be > 0");
+
 		this.source = source;
 		this.target = target;
 		this.factor = factor;
@@ -103,8 +108,11 @@ public class ExchangeRateImpl implements ExchangeRate {
 	 */
 	@SuppressWarnings("unchecked")
 	public ExchangeRateImpl(CurrencyUnit source, CurrencyUnit target,
-			BigDecimal factor, long quoteTS, long validdityDuration) {
-		super();
+			BigDecimal factor, long quoteTS, long validityDuration) {
+
+        if(factor.intValue() < 0)
+            throw new CurrencyConversionException(source,target, "Exchange rate must be > 0");
+
 		this.source = source;
 		this.target = target;
 		this.factor = factor;
